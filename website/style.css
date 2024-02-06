@@ -1,0 +1,41 @@
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.WebSpace {
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  height: 500px;
+}
+h1 {
+  color: yellow;
+  font-size: 80px;
+}
+
+.secondSpace {
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: brown;
+  width: 900px;
+  height: 500px;
+}
+
+h2 {
+  font-size: 50px;
+  color: chartreuse;
+}
+
+.linkTo {
+  font-size: 40px;
+  color: blue;
+}
