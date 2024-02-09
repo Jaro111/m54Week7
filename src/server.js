@@ -1,92 +1,54 @@
+require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
+
+const connection = require("./bd/connection");
+
+const bookRouter = require("./books/routes");
+
 const app = express();
-
-// app -object
-// use - method
-// "example" - folder
-// app.use("/example", express.static("example"));
-
-// app.use("/myWebsite", express.static("website"));
-
-// app.get("/health", (req, res) => {
-//   res.send("healthy");
-// });
-
-// http verbs - get, post, put, delete
-// http verb get
-
-const fakeArray = [];
-
-const userArray = {
-  username: "admin",
-  password: "12345",
-};
-
 app.use(express.json());
 
-// ******************************************************************************
+connection();
+
+app.use(bookRouter);
 
 // ******************************************************************************
 
-app.get("/getAllBooks", (request, response) => {
-  if (userArray.username === "admin" && userArray.password === "12345") {
-    response.send({
-      message: "success",
-      fakeArr: fakeArray,
-    });
-  } else {
-    response.send({
-      message: "access denied",
-    });
-  }
-});
-// ******************************************************************************
+// ************************************************** GET **************************************************
 
 // ******************************************************************************
-app.post("/addBook", (request, response) => {
-  if (
-    request.body.useDetails.username === "admin" &&
-    request.body.useDetails.password === "12345"
-  ) {
-    fakeArray.push(request.body.book);
-    response.send({
-      message: "success",
-      newBook: fakeArray[fakeArray.length - 1],
-    });
-  } else {
-    response.send({
-      message: "acces denied",
-    });
-  }
-});
+
+// // ************************************************** ADD **************************************************
+
 // ********************************************************************************
 
-// ******************************************************************************
-app.put("/books", (request, response) => {
-  for (let i = 0; i < fakeArray.length; i++) {
-    if (fakeArray[i].title === request.body.title) {
-      fakeArray[i] = request.body.item;
-    }
-  }
-  response.send({
-    message: "success",
-    newBook: fakeArray,
-  });
-});
+// // ************************************************** EDIT **************************************************
+// app.put("/books/update", async (request, response) => {
+//   try {
+//     const book = await Book.findOneAndUpdate(
+//       { author: request.body.author },
+//       { author: request.body.updateAuthor.author },
+//       { new: true }
+//     );
+//     // response.send({ message: "Book updated", book: book });
+//     if (!book) {
+//       return response.status(404).send({ message: "Error: Book not found" });
+//     }
+//     response.send({ message: "Success: Author updated", book: book });
+//   } catch (error) {
+//     response.status(500).send({ message: "Error: Unable to update author" });
+//   }
+// });
+
 // *********************************************************************************
 
-// ******************************************************************************
-app.delete("/books", (request, response) => {
-  for (let i = 0; i < fakeArray.length; i++) {
-    if (fakeArray[i].title === request.body.title) {
-      fakeArray.splice(i, 1);
-    }
-  }
-  response.send({
-    message: "deleted",
-    newBook: fakeArray,
-  });
-});
+// // ******************************************************************************
+// app.delete("/books/delete", async (request, response) => {
+//   const book = await Book.deleteOne({ title: request.body.title });
+//   const books = await Book.find({});
+//   response.send({ message: "Book deleted", books: books });
+// });
 
 // ******************************************************************************
 
