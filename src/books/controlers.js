@@ -55,14 +55,71 @@ const deleteBook = async (request, response) => {
   }
 };
 
-// *************** FIND ***************
+// *************** FIND BY TITLE ***************
 
-// const findBook = async (request, response) => {
-//   await Book.findOne();
-//   console.log("title: ", request.query.books);
-// };
+const findBook = async (request, response) => {
+  try {
+    const newBook = await Book.find({ title: request.params.book });
+    console.log(request.params);
+    response.send({ message: "Success", params: newBook });
+  } catch (error) {
+    response.send({ message: error.message, error: error });
+  }
+};
 
-// *******************************************
+// *************** FIND AND UPDATE ***************
+const findAndUpdate = async (request, response) => {
+  try {
+    if (request.params.toUpdate === "title") {
+      const book = await Book.findOneAndUpdate(
+        { title: request.params.book },
+        { title: request.params.updated },
+        { new: true }
+      );
+      response.send({ message: "Title updated", book: book });
+      //
+    } else if (request.params.toUpdate === "author") {
+      const book = await Book.findOneAndUpdate(
+        { title: request.params.book },
+        { author: request.params.updated },
+        { new: true }
+      );
+      response.send({ message: "Author updated", book: book });
+      //
+    } else if (request.params.toUpdate === "genre") {
+      const book = await Book.findOneAndUpdate(
+        { title: request.params.book },
+        { genre: request.params.updated },
+        { new: true }
+      );
+      response.send({ message: "Genre updated", book: book });
+    }
+    //
+  } catch (error) {
+    response.send({ message: error.message, error: error });
+  }
+};
+//
+
+// *************** DELETE SINGLE OR ALL ***************
+const deleteBy = async (request, response) => {
+  try {
+    if (request.params.choice === "All" && request.params.byWhat === "All") {
+      const books = await Book.deleteMany({});
+      console.log(books);
+      response.send({ message: "deleted", books: books });
+      //
+    } else if ((request.params.choice = "author")) {
+      await Book.deleteMany({ author: request.params.byWhat });
+      const books = await Book.find({});
+      response.send({ message: "Book deleted", books: books });
+
+      //
+    }
+  } catch (error) {
+    response.send({ message: error.message, error: error });
+  }
+};
 
 // *******************************************
 module.exports = {
@@ -70,5 +127,7 @@ module.exports = {
   getBooks: getBooks,
   updateBook: updateBook,
   deleteBook: deleteBook,
-  // findBook: findBook,
+  findBook: findBook,
+  findAndUpdate: findAndUpdate,
+  deleteBy: deleteBy,
 };
