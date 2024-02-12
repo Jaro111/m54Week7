@@ -26,7 +26,7 @@ bookRouter.get(`/books/findOne/:book`, findBook);
 
 // ------  FIND AND UPDATE ------
 // Find book by title and update chosen item. Artist, title or genre
-// :book - book title. :toUpdate(title, author or genre). :updated = type update
+// :book - book title. :toUpdate(title, author or genre). :updated = 'updated text'
 // /books/findBy/<book title>/<What to update: title || author || genre>/<update>
 
 bookRouter.put(`/books/findBy/:book/:toUpdate/:updated`, findAndUpdate);
@@ -36,6 +36,6 @@ bookRouter.put(`/books/findBy/:book/:toUpdate/:updated`, findAndUpdate);
 // /books/deleteBy/All/All - delete all items
 // /books/deleteBy/<author>/<author name>
 
-bookRouter.delete(`/books/deleteBy/:choice/:byWhat`, deleteBy);
+bookRouter.delete(`/books/deleteBy/:choice/:author`, deleteBy);
 
 module.exports = bookRouter;

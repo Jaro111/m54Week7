@@ -110,7 +110,7 @@ const deleteBy = async (request, response) => {
       response.send({ message: "deleted", books: books });
       //
     } else if ((request.params.choice = "author")) {
-      await Book.deleteMany({ author: request.params.byWhat });
+      await Book.deleteMany({ author: request.params.author });
       const books = await Book.find({});
       response.send({ message: "Book deleted", books: books });
 
